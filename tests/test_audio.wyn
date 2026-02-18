@@ -1,0 +1,16 @@
+fn main() -> int {
+    Test.init("audio")
+    // Audio format detection
+    var wav = "sound.wav"
+    var mp3 = "music.mp3"
+    Test.assert(wav.ends_with(".wav"), "detect wav")
+    Test.assert(mp3.ends_with(".mp3"), "detect mp3")
+    // Sample rate math
+    var sample_rate = 44100
+    var channels = 2
+    var bits = 16
+    var bytes_per_sec = sample_rate * channels * (bits / 8)
+    Test.assert_eq_int(bytes_per_sec, 176400, "bytes per sec")
+    Test.summary()
+    return 0
+}
