@@ -1,4 +1,4 @@
-# audio — Official Wyn Package
+# audio - Official Wyn Package
 
 Cross-platform audio playback. Wraps miniaudio (single-header C library).
 
@@ -17,4 +17,4 @@ Audio_play(sound)
 Audio_close()
 ```
 
-No system dependency — miniaudio is bundled.
+No system dependency - miniaudio is bundled.
