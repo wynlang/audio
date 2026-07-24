@@ -1,28 +1,12 @@
-fn audio_format(path: string) -> string {
-    if path.ends_with(".wav") { return "wav" }
-    if path.ends_with(".mp3") { return "mp3" }
-    if path.ends_with(".ogg") { return "ogg" }
-    if path.ends_with(".flac") { return "flac" }
-    return "unknown"
-}
+// Exercises the shipped lib in src/audio.wyn via the tests/audio.wyn symlink.
+import audio
 
-fn audio_bytes_per_second(sample_rate: int, channels: int, bits_per_sample: int) -> int {
-    return sample_rate * channels * (bits_per_sample / 8)
-}
-
-fn audio_duration_estimate(file_bytes: int, bytes_per_sec: int) -> int {
-    if bytes_per_sec == 0 { return 0 }
-    return file_bytes / bytes_per_sec
-}
-
-fn main() -> int {
-    assert_eq(audio_format("song.wav"), "wav")
-    assert_eq(audio_format("song.mp3"), "mp3")
-    assert_eq(audio_format("song.txt"), "unknown")
-    assert_eq(audio_bytes_per_second(44100, 2, 16), 176400)
-    assert_eq(audio_duration_estimate(176400, 176400), 1)
-    assert_eq(audio_duration_estimate(882000, 176400), 5)
-    
-    println("audio: 6 tests passed")
-    return 0
-}
+test "wav format" { assert_eq(audio.audio_format("song.wav"), "wav") }
+test "mp3 format" { assert_eq(audio.audio_format("a.mp3"), "mp3") }
+test "flac format" { assert_eq(audio.audio_format("a.flac"), "flac") }
+test "unknown format" { assert_eq(audio.audio_format("a.txt"), "unknown") }
+test "supported yes" { assert(audio.audio_is_supported("x.ogg")) }
+test "supported no" { assert(not audio.audio_is_supported("x.txt")) }
+test "bytes per second" { assert_eq(audio.audio_bytes_per_second(44100, 2, 16), 176400) }
+test "duration estimate" { assert_eq(audio.audio_duration_estimate(352800, 176400), 2) }
+test "duration zero guard" { assert_eq(audio.audio_duration_estimate(1000, 0), 0) }

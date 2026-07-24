@@ -2,7 +2,7 @@
 // Pure-Wyn helpers for format detection and audio math.
 // C bindings (libsndfile, libmpg123, libvorbis) would provide: decode, encode, stream, resample.
 
-fn audio_format(path: string) -> string {
+pub fn audio_format(path: string) -> string {
     if path.ends_with(".wav") { return "wav" }
     if path.ends_with(".mp3") { return "mp3" }
     if path.ends_with(".ogg") { return "ogg" }
@@ -10,16 +10,16 @@ fn audio_format(path: string) -> string {
     return "unknown"
 }
 
-fn audio_is_supported(path: string) -> bool {
+pub fn audio_is_supported(path: string) -> bool {
     var fmt = audio_format(path)
     return fmt != "unknown"
 }
 
-fn audio_bytes_per_second(sample_rate: int, channels: int, bits_per_sample: int) -> int {
+pub fn audio_bytes_per_second(sample_rate: int, channels: int, bits_per_sample: int) -> int {
     return sample_rate * channels * (bits_per_sample / 8)
 }
 
-fn audio_duration_estimate(file_bytes: int, bytes_per_sec: int) -> int {
+pub fn audio_duration_estimate(file_bytes: int, bytes_per_sec: int) -> int {
     if bytes_per_sec <= 0 { return 0 }
     return file_bytes / bytes_per_sec
 }

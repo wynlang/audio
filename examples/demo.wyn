@@ -1,0 +1,8 @@
+import audio
+
+fn main() {
+    println("format: ${audio.audio_format("song.wav")}")
+    var bps = audio.audio_bytes_per_second(44100, 2, 16)
+    println("bytes/sec: ${bps}")
+    println("duration of 1MB: ${audio.audio_duration_estimate(1048576, bps)}s")
+}
